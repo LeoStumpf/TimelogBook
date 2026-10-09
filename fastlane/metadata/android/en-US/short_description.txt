@@ -1,0 +1,1 @@
+Simple time logbook with a stop button in the notification

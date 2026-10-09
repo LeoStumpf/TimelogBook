@@ -1,0 +1,8 @@
+<p>A very simple time logbook. Press <b>Start logging</b>, press <b>Stop logging</b> – that's it.</p>
+<ul>
+<li>A persistent notification while logging, with a <b>Stop</b> button – pause without opening the app.</li>
+<li>After stopping, a dismissible notification with the day's total and a <b>Start</b> button.</li>
+<li>Time total of the day, all entries, breaks and the corrected end time (first start + total).</li>
+<li>Edit, add and delete entries, browse past days, export as CSV.</li>
+</ul>
+<p>Free software (AGPL-3.0-or-later). No ads, no tracking, no internet permission – your data stays on your device.</p>
