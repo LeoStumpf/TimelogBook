@@ -1,1 +1,5 @@
-First release.
+First release of Timelog Book.
+• Start and stop logging with one button, or from the notification
+• Day total, breaks and the corrected end time
+• Edit, add and delete entries, browse past days, export as CSV
+No ads, no tracking, no internet permission.

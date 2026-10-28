@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../app_info.dart';
 import '../domain/day_summary.dart';
 import '../models/session.dart';
 import '../services/csv_export.dart';
@@ -100,9 +101,11 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   void _about() => showAboutDialog(
     context: context,
     applicationName: 'Timelog Book',
+    applicationVersion: kAppVersion,
     applicationLegalese:
         'Free software under the GNU AGPL v3 or later.\n'
-        'No ads, no tracking. Your data stays on your device.',
+        'No ads, no tracking. Your data stays on your device.\n'
+        'Source code: $kSourceUrl',
   );
 
   @override
