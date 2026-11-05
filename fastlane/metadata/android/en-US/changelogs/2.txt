@@ -1,0 +1,4 @@
+A new look.
+• Your day as a 24-hour dial around the start/stop button: entries are arcs, breaks are gaps
+• New app icon, colours and dark theme
+• Every entry on the home screen stays visible and "Add entry" has its own button

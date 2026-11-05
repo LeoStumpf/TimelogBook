@@ -84,6 +84,10 @@ CI checks that the tag matches the version and publishes a GitHub release with
 `TimelogBook-<name>-<abi>.apk`. For Google Play, take the AAB from that run's artifact and
 upload it in Play Console. The store texts live in `fastlane/metadata/android/en-US/`.
 
+**Graphics:** `python3 tool/render_icons.py` regenerates the launcher icons and the store's
+`icon.png` and `featureGraphic.png` from one ring geometry (needs cairosvg and Pillow).
+`tool/demo_db.py` writes the demo database behind the store screenshots.
+
 ## Notes on Android
 
 The "logging" notification belongs to a foreground service (type `specialUse`), which is

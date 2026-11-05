@@ -9,6 +9,8 @@ import '../domain/day_summary.dart';
 import '../models/session.dart';
 import '../services/csv_export.dart';
 import '../util/format.dart';
+import 'app_theme.dart';
+import 'day_dial.dart';
 import 'day_view.dart';
 import 'edit_session_dialog.dart';
 import 'history_screen.dart';
@@ -118,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
     return Scaffold(
       appBar: AppBar(
+        titleSpacing: 20,
         title: const Text('Timelog Book'),
         actions: [
           IconButton(
@@ -137,57 +140,41 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.small(
-        tooltip: 'Add entry',
-        onPressed: () => editSession(context, model, day: model.day),
-        child: const Icon(Icons.add),
-      ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 24, 16, 88),
+        padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
         children: [
           Text(
             isToday ? 'Time total' : 'Time total · ${formatDay(parseDayKey(model.day))}',
             textAlign: TextAlign.center,
-            style: theme.textTheme.titleMedium,
-          ),
-          Text(
-            formatDuration(summary.total, seconds: running),
-            textAlign: TextAlign.center,
-            style: theme.textTheme.displayLarge?.copyWith(
-              fontFeatures: const [FontFeature.tabularFigures()],
+            style: theme.textTheme.titleSmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          const SizedBox(height: 32),
-          Center(
-            child: SizedBox.square(
-              dimension: 200,
-              child: FilledButton(
-                onPressed: model.toggle,
-                style: FilledButton.styleFrom(
-                  shape: const CircleBorder(),
-                  backgroundColor: running ? theme.colorScheme.error : theme.colorScheme.primary,
-                  foregroundColor: running
-                      ? theme.colorScheme.onError
-                      : theme.colorScheme.onPrimary,
-                ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(running ? Icons.stop : Icons.play_arrow, size: 64),
-                    Text(
-                      running ? 'Stop logging' : 'Start logging',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: running ? theme.colorScheme.onError : theme.colorScheme.onPrimary,
-                      ),
-                    ),
-                  ],
-                ),
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              formatDuration(summary.total, seconds: running),
+              style: theme.textTheme.displayLarge?.copyWith(
+                fontSize: 60,
+                height: 68 / 60,
+                fontWeight: FontWeight.w700,
+                letterSpacing: -1.5,
+                fontFeatures: tabularFigures,
               ),
             ),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 8),
+          StartStopDial(
+            sessions: model.sessions,
+            now: now,
+            running: running,
+            onPressed: model.toggle,
+          ),
+          const SizedBox(height: 16),
           SummaryRow(summary: summary),
-          const Divider(height: 32),
+          const SizedBox(height: 8),
+          EntriesHeader(onAdd: () => editSession(context, model, day: model.day)),
           SessionList(
             sessions: model.sessions,
             now: now,

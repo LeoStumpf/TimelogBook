@@ -14,5 +14,6 @@ The full licence texts are shown in the app's licence page (Flutter's `LicenseRe
 | [intl](https://pub.dev/packages/intl) | 0.20.3 | BSD-3-Clause |
 | [share_plus](https://pub.dev/packages/share_plus) | 13.3.1 | BSD-3-Clause |
 | [cupertino_icons](https://pub.dev/packages/cupertino_icons) | 1.0.9 | MIT |
+| [Manrope](https://github.com/googlefonts/manrope) (font, in `assets/fonts/`) | 4.505 | SIL OFL 1.1 |
 
 Transitive dependencies are listed in `pubspec.lock`; their licences ship in the app as well.

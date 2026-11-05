@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../data/session_repository.dart';
 import '../models/session.dart';
 import '../util/format.dart';
+import 'app_theme.dart';
 import 'logbook_model.dart';
 
 /// Opens the editor for [session], or for a new entry on [day].
@@ -124,6 +125,11 @@ class _EditSessionDialogState extends State<_EditSessionDialog> {
   @override
   Widget build(BuildContext context) {
     final end = _end;
+    final theme = Theme.of(context);
+    final timeStyle = theme.textTheme.titleMedium?.copyWith(
+      fontWeight: FontWeight.w800,
+      fontFeatures: tabularFigures,
+    );
     return AlertDialog(
       title: Text(_isNew ? 'Add entry' : 'Edit entry'),
       content: Column(
@@ -139,7 +145,7 @@ class _EditSessionDialogState extends State<_EditSessionDialog> {
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.play_arrow),
             title: const Text('Start'),
-            trailing: Text(formatTime(_start), style: Theme.of(context).textTheme.titleMedium),
+            trailing: Text(formatTime(_start), style: timeStyle),
             onTap: () async {
               final t = await _pickTime(_start);
               if (t == null) return;
@@ -157,7 +163,7 @@ class _EditSessionDialogState extends State<_EditSessionDialog> {
               end == null
                   ? 'running'
                   : '${formatTime(end)}${DateUtils.isSameDay(end, _start) ? '' : ' (+1 day)'}',
-              style: Theme.of(context).textTheme.titleMedium,
+              style: timeStyle,
             ),
             onTap: () async {
               final t = await _pickTime(_end ?? DateTime.now());
@@ -169,25 +175,34 @@ class _EditSessionDialogState extends State<_EditSessionDialog> {
               alignment: Alignment.centerRight,
               child: Text(
                 'Duration ${formatDuration(end.difference(_start))}',
-                style: Theme.of(context).textTheme.bodySmall,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           if (_error != null)
             Padding(
               padding: const EdgeInsets.only(top: 12),
-              child: Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+              child: Text(_error!, style: TextStyle(color: theme.colorScheme.error)),
             ),
         ],
       ),
       actions: [
-        if (!_isNew)
-          TextButton(
-            onPressed: _delete,
-            style: TextButton.styleFrom(foregroundColor: Theme.of(context).colorScheme.error),
-            child: const Text('Delete'),
-          ),
-        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
-        FilledButton(onPressed: _save, child: const Text('Save')),
+        Row(
+          children: [
+            if (!_isNew)
+              TextButton(
+                onPressed: _delete,
+                style: TextButton.styleFrom(foregroundColor: theme.colorScheme.error),
+                child: const Text('Delete'),
+              ),
+            const Spacer(),
+            TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+            const SizedBox(width: 4),
+            FilledButton(onPressed: _save, child: const Text('Save')),
+          ],
+        ),
       ],
     );
   }

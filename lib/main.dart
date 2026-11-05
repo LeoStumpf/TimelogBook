@@ -14,14 +14,21 @@
 // details. You should have received a copy of the GNU Affero General Public
 // License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'services/app_services.dart';
+import 'ui/app_theme.dart';
 import 'ui/home_screen.dart';
 import 'ui/logbook_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  LicenseRegistry.addLicense(() async* {
+    final text = await rootBundle.loadString('assets/fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(const ['Manrope'], text);
+  });
   late final LogbookModel model;
   final services = await AppServices.create(
     // Buttons pressed while the app runs still go through the background handler;
@@ -42,11 +49,10 @@ class TimelogBookApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const seed = Colors.teal;
     return MaterialApp(
       title: 'Timelog Book',
-      theme: ThemeData(colorSchemeSeed: seed),
-      darkTheme: ThemeData(colorSchemeSeed: seed, brightness: Brightness.dark),
+      theme: lightTheme,
+      darkTheme: darkTheme,
       home: HomeScreen(model: model),
     );
   }
