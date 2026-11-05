@@ -160,7 +160,7 @@ def feature_graphic():
 
 def store_icon():
     """512 x 512 and full bleed: Google Play rounds the corners itself."""
-    (STORE / 'icon.png').write_bytes(icon_png(512))
+    Image.open(io.BytesIO(icon_png(512))).convert('RGBA').save(STORE / 'icon.png')
 
 
 if __name__ == '__main__':
